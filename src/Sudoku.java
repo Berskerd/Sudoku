@@ -7,28 +7,61 @@ import java.io.IOException;
 public class Sudoku {
 
 	static String output="";
+	static String bbridgr="";
+	static String bbridgr2="";
+	static String bbridgr3="";
+	static String bbridgr4="";
+	static String bbridgr5="";
+	static String bbridgr6="";
+	static String bbridgr7="";
+	static String bbridgr8="";
+	
 	static int[][]  a=new int[81][2];
 	static int      kernel=0;
 	static int      flagall=0;
+	static int       flagh=0;
+	static int number;
+	static int count;
 	private static int[][] sudu= new int[9][9];
 		
    public static void main(String[] args) {
-	   int count;
+	   
 	   String load="";
 	   Input input = new Input(args);
+	   //执行生成数独操作
 	   if (args[0].equals("-c"))
 		 {
 		   count=input.getnum();
-		   for(int number=0;number<count;number++) {
+		   for(number=0;number<count/9;number++) {
 			   flagall=0;
+			   bbridgr="";
+			   bbridgr2="";
+			   bbridgr3="";
+			   bbridgr4="";
+			   bbridgr5="";
+			   bbridgr6="";
+			   bbridgr7="";
+			   bbridgr8="";
 	    		for(int n=0;n<9;n++)
 	    			for(int m=0;m<9;m++)
 	    			     sudu[n][m]=0;
 	    		 createPer(sudu);	    		 	 
 	    		 create(sudu,1,0);   		 
+	    		 //System.out.println(number);
+		   }
+		   for(number=0;number<count%9;number++) {
+			   flagall=0;
+			   flagh=1;
+			   for(int n=0;n<9;n++)
+	    			for(int m=0;m<9;m++)
+	    			     sudu[n][m]=0;
+	    		 createPer(sudu);	    		 	 
+	    		 create(sudu,1,0);   		 
+	    		 //System.out.println(number);
 		   }
 		   new Output().createFile(output);
 		 }
+		 //执行解决数独的程序
 	   else	
 		  {
 		   String problem="";
@@ -86,16 +119,133 @@ public class Sudoku {
    
 //创建一个数独题目的函数
    public static void create(int[][] sudu,int i, int j) {
-   	    int flag=0;		
+   	    int flag=0;	   	    
 		if (i==9 && j==0) {
 			for(int ii=0;ii<9;ii++)
 	        	   for(int j1=0;j1<9;j1++) {
 	        		   output=output+sudu[ii][j1]+" ";
+	        		   
+	        		   //针对交换前三行的第二三行
+	        		   if (ii==1&&flagh==0) {
+						 bbridgr2=bbridgr2+sudu[ii+1][j1]+" ";
+					    }
+	        		   else if (ii==2&&flagh==0) {
+	        			   bbridgr2=bbridgr2+sudu[ii-1][j1]+" ";
+					    }
+	        		   else if(flagh==0){
+	        			   bbridgr2=bbridgr2+sudu[ii][j1]+" ";
+					   }
+	        		   
+	        		 //针对交换中间三行的前两行
+	        		   if (ii==3&&flagh==0) {
+							 bbridgr3=bbridgr3+sudu[ii+1][j1]+" ";
+						    }
+		        		   else if (ii==4&&flagh==0) {
+		        			   bbridgr3=bbridgr3+sudu[ii-1][j1]+" ";
+						    }
+		        		   else if(flagh==0){
+		        			   bbridgr3=bbridgr3+sudu[ii][j1]+" ";
+						   }
+	        		   
+	        		 //针对交换中间三行的后两行
+	        		   if (ii==4&&flagh==0) {
+							 bbridgr4=bbridgr4+sudu[ii+1][j1]+" ";
+						    }
+		        		   else if (ii==5&&flagh==0) {
+		        			   bbridgr4=bbridgr4+sudu[ii-1][j1]+" ";
+						    }
+		        		   else if(flagh==0){
+		        			   bbridgr4=bbridgr4+sudu[ii][j1]+" ";
+						   }
+	        		   
+	        		 //针对交换中间三行的  第一和第三行
+	        		   if (ii==3&&flagh==0) {
+							 bbridgr5=bbridgr5+sudu[ii+2][j1]+" ";
+						    }
+		        		   else if (ii==5&&flagh==0) {
+		        			   bbridgr5=bbridgr5+sudu[ii-2][j1]+" ";
+						    }
+		        		   else if(flagh==0&&flagh==0){
+		        			   bbridgr5=bbridgr5+sudu[ii][j1]+" ";
+						   }
+	        		   
+	        		 //针对交换最后三行的  第一和第二行
+	        		   if (ii==6&&flagh==0) {
+							 bbridgr6=bbridgr6+sudu[ii+1][j1]+" ";
+						    }
+		        		   else if (ii==7&&flagh==0) {
+		        			   bbridgr6=bbridgr6+sudu[ii-1][j1]+" ";
+						    }
+		        		   else if(flagh==0&&flagh==0){
+		        			   bbridgr6=bbridgr6+sudu[ii][j1]+" ";
+						   }
+	        		   
+	        		 //针对交换最后三行的  第二和第三行
+	        		   if (ii==7&&flagh==0) {
+							 bbridgr7=bbridgr7+sudu[ii+1][j1]+" ";
+						    }
+		        		   else if (ii==8&&flagh==0) {
+		        			   bbridgr7=bbridgr7+sudu[ii-1][j1]+" ";
+						    }
+		        		   else if(flagh==0&&flagh==0){
+		        			   bbridgr7=bbridgr7+sudu[ii][j1]+" ";
+						   }
+	        		   
+	        		 //针对交换最后三行的  第一和第三行
+	        		   if (ii==6&&flagh==0) {
+							 bbridgr8=bbridgr8+sudu[ii+2][j1]+" ";
+						    }
+		        		   else if (ii==8&&flagh==0) {
+		        			   bbridgr8=bbridgr8+sudu[ii-2][j1]+" ";
+						    }
+		        		   else if(flagh==0){
+		        			   bbridgr8=bbridgr8+sudu[ii][j1]+" ";
+						   }
+	        		   
+	        		   if (ii>=0 && ii<=2&&flagh==0) {
+						   bbridgr=bbridgr+sudu[ii][j1]+" ";
+					   }
+	        		   else if (ii>=3 && ii<6&&flagh==0) {
+	        			   bbridgr=bbridgr+sudu[ii+3][j1]+" ";
+					    }
+	        		   else if (ii>=6 && ii<9&&flagh==0) {
+	        			   bbridgr=bbridgr+sudu[ii-3][j1]+" ";
+					    }					   	        		   	        		   
 	        		   if (j1==8) {
 						output=output+"\r"+"\n";
-					    }
-	        	   }
+						if (flagh==0) {
+						bbridgr=bbridgr+"\r"+"\n";
+						bbridgr2=bbridgr2+"\r"+"\n";
+						bbridgr3=bbridgr3+"\r"+"\n";
+						bbridgr4=bbridgr4+"\r"+"\n";
+						bbridgr5=bbridgr5+"\r"+"\n";
+						bbridgr6=bbridgr6+"\r"+"\n";
+						bbridgr7=bbridgr7+"\r"+"\n";
+						bbridgr8=bbridgr8+"\r"+"\n";
+						}						
+	        	        }	        		   
+	        	     }
+	        	  //如果是在执行余数的数独题目时，一次生成一个即可，不需要执行下面的代码
+			if (flagh==0) {
+		 output=output+"\r"+"\n";
+		 output=output+bbridgr;
  		 output=output+"\r"+"\n";
+ 		 output=output+bbridgr2;
+		 output=output+"\r"+"\n";
+		 output=output+bbridgr3;
+ 		 output=output+"\r"+"\n";
+ 		 output=output+bbridgr4;
+		 output=output+"\r"+"\n";
+		 output=output+bbridgr5;
+ 		 output=output+"\r"+"\n";
+ 		 output=output+bbridgr6;
+		 output=output+"\r"+"\n";
+		 output=output+bbridgr7;
+ 		 output=output+"\r"+"\n";
+ 		output=output+bbridgr8;
+		 //output=output+"\r"+"\n";
+			}
+		output=output+"\r"+"\n";
  		 flagall=1;
 			return ;
 		}
@@ -141,6 +291,7 @@ public class Sudoku {
 		   }		        	
 		return ;
 	}
+
 //创建一个全排列，作为数独的第一行  
    public static void createPer(int[][] sudu) {
 	   sudu[0][0]=3;
@@ -248,11 +399,11 @@ public class Sudoku {
 				}
 	 }
 	
-	public static int getnum() {
+	public int getnum() {
 		return num;
 	}
 	
-	public static String getload() {
+	public String getload() {
 		return load;
 	}
 
@@ -298,3 +449,9 @@ public class Sudoku {
 	}
  }
  
+
+  
+
+
+
+
